@@ -22,7 +22,7 @@ specifiers:
   eslint-plugin-import: ^2.22.0
   eslint-plugin-prettier: ^3.1.4
   ginlibs-chain: ^0.0.14
-  ginlibs-events: ^0.0.12
+  ginlibs-events: ^0.0.14
   ginlibs-type-check: ^0.0.8
   glob: ^7.1.6
   husky: ^4.2.5
@@ -42,7 +42,7 @@ specifiers:
 
 dependencies:
   ginlibs-chain: 0.0.14
-  ginlibs-events: 0.0.12
+  ginlibs-events: 0.0.14
   ginlibs-type-check: 0.0.8
 
 devDependencies:
@@ -5167,8 +5167,8 @@ packages:
       ginlibs-type-check: 0.0.8
     dev: false
 
-  /ginlibs-events/0.0.12:
-    resolution: {integrity: sha512-elhZox8eU0BkuTlGcgJy5jTyGXD9gNFcDN86y8HcG9VteqGCL7ELvbq6jSQYnCIsKanFp/mtIKVl+Fn4Ut+BAA==}
+  /ginlibs-events/0.0.14:
+    resolution: {integrity: sha512-6feXCuNVYrgdjWL1HcAWS9RUIeBqoCqHNAz/woh+bA3V8SgtZmG35PbHty27LsLvZab08r/bR3WBeVAWyVFBZg==}
     dependencies:
       ginlibs-type-check: 0.0.8
     dev: false
