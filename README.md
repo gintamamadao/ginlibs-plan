@@ -119,9 +119,18 @@ plan.addToPlan({
 
 # API
 
+### 初始化
+
+- 初始化时可以加入上下文，将作为参数传入事件函数
+
+```js
+const plan = new Plan(context)
+```
+
 ### `addToPlan(info)`
 
 - 添加事件
+- 可以重复添加相同事件
 
 ### `getPlan()`
 
