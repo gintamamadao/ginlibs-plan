@@ -89,6 +89,14 @@ plan.addToPlan({
   weight: 1,
 })
 plan.addToPlan({
+  name: 'a-1',
+  handle: () => {
+    str = str + 'a-1'
+  },
+  after: 'a',
+  weight: 100,
+})
+plan.addToPlan({
   name: 'a-2',
   handle: () => {
     str = str + 'a-2'
@@ -104,8 +112,10 @@ plan.addToPlan({
   weight: 10,
 })
 
-// a 是 a-2 的事件的依赖，需要在 a-2 之前执行，所以顺序是 b -> a -> a-2
+// a 是 a-2，a-1 的事件的依赖，需要在 a-2，a-1 之前执行，所以顺序是 b -> a -> a-1 -> a-2
 ```
+
+> 注意：依赖和权重同时存在的事件，权重将仅在有着相同依赖关系的事件比较，例如上面的例子，a-1 的权重是 100，但是 a-1 只会和 a-2 的权重做比较区分先后，所以执行的顺序还是在 b 之后
 
 # API
 
