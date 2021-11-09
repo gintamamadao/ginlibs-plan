@@ -1,3 +1,7 @@
+[![NPM version](https://badgen.net/npm/v/ginlibs-plan)](https://www.npmjs.com/package/ginlibs-plan)
+[![NPM Weekly Downloads](https://badgen.net/npm/dw/ginlibs-plan)](https://www.npmjs.com/package/ginlibs-plan)
+[![License](https://badgen.net/npm/license/ginlibs-plan)](https://www.npmjs.com/package/ginlibs-plan)
+
 # ginlibs-plan
 
 用于处理多个注册事件执行顺序，可以设置事件的权重，依赖事件，从而获得目标的执行顺序
