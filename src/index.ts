@@ -35,11 +35,11 @@ class Plan {
       return
     }
     if (before) {
-      this.addByBefore(name, before, weight)
+      this.addByBefore(before, name, weight)
       return
     }
     if (after) {
-      this.addByAfter(name, after, weight)
+      this.addByAfter(after, name, weight)
       return
     }
   }
@@ -70,7 +70,7 @@ class Plan {
     return
   }
 
-  private addByBefore(name: string, before: string, weight = 0) {
+  private addByBefore(before: string, name: string, weight = 0) {
     const anchorNode = this.eventChain.find(before)
     if (!anchorNode) {
       console.error('before event do not exist')
@@ -105,7 +105,7 @@ class Plan {
     }
   }
 
-  private addByAfter(name: string, after: string, weight = 0) {
+  private addByAfter(after: string, name: string, weight = 0) {
     const anchorNode = this.eventChain.find(after)
     if (!anchorNode) {
       console.error('after event do not exist')
