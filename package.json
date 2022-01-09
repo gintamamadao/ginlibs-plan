@@ -68,7 +68,7 @@
     "typescript": "^4.0.2"
   },
   "dependencies": {
-    "ginlibs-chain": "^0.0.14",
+    "ginlibs-chain": "^1.0.0",
     "ginlibs-events": "^0.0.14",
     "ginlibs-type-check": "^0.0.8"
   },

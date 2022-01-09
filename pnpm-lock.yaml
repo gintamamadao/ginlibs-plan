@@ -21,7 +21,7 @@ specifiers:
   eslint-import-resolver-typescript: ^2.2.0
   eslint-plugin-import: ^2.22.0
   eslint-plugin-prettier: ^3.1.4
-  ginlibs-chain: ^0.0.14
+  ginlibs-chain: ^1.0.0
   ginlibs-events: ^0.0.14
   ginlibs-type-check: ^0.0.8
   glob: ^7.1.6
@@ -41,7 +41,7 @@ specifiers:
   typescript: ^4.0.2
 
 dependencies:
-  ginlibs-chain: 0.0.14
+  ginlibs-chain: 1.0.0
   ginlibs-events: 0.0.14
   ginlibs-type-check: 0.0.8
 
@@ -5161,10 +5161,11 @@ packages:
       json-stringify-safe: 5.0.1
     dev: true
 
-  /ginlibs-chain/0.0.14:
-    resolution: {integrity: sha512-P3uj4Dzg9R+2ZeZUHv7Nw5JjFOwDfwrXfj3ieKZLe3p7jHyNvdbveuUyv/iLSNIo+WmuNth2XGD3gGNQ+JxjBA==}
+  /ginlibs-chain/1.0.0:
+    resolution: {integrity: sha512-J9sZtWK6Jsq7jJPSsKwCwsQR2VODN/zAIfpVQKf+LzuXT+PDqq27QEvyOfdiojAcwa/7n2K2j5XOh6Kp+fdW5g==}
     dependencies:
       ginlibs-type-check: 0.0.8
+      ginlibs-utils: 0.0.11
     dev: false
 
   /ginlibs-events/0.0.14:
@@ -5189,6 +5190,12 @@ packages:
 
   /ginlibs-type-check/0.0.8:
     resolution: {integrity: sha512-RAMjwkrU68ZfL/2kfxNhVe7Ym0ATILo9z7ZBEfMh0kXSNyhSBkwHChnBNdkReSdVGt5zHjLPeyIPonFEdP35xA==}
+
+  /ginlibs-utils/0.0.11:
+    resolution: {integrity: sha512-3uUEEpf3Jb+5wn508VBXbLdbNLm+cK6zKicEhtBOYk1qGkCqxQwZfH7dmt/X+hPbe53/fCIAKCcynrt854W9nw==}
+    dependencies:
+      ginlibs-type-check: 0.0.8
+    dev: false
 
   /git-raw-commits/2.0.0:
     resolution: {integrity: sha512-w4jFEJFgKXMQJ0H0ikBk2S+4KP2VEjhCvLCNqbNRQC8BgGWgLKNCO7a9K9LI+TVT7Gfoloje502sEnctibffgg==}

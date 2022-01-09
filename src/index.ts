@@ -1,4 +1,4 @@
-import Chain from 'ginlibs-chain'
+import { Chain } from 'ginlibs-chain'
 import Events from 'ginlibs-events'
 
 export interface EventPlanInfo {
@@ -45,11 +45,13 @@ class Plan {
   }
 
   private addByWeight(name: string, weight: number) {
-    const anchorNode = this.eventChain.find((nodeVal: string) => {
-      const itEventInfo = this.planInfoMap[nodeVal]
-      const { weight: itWeight = 0, before, after } = itEventInfo
-      return !before && !after && itWeight >= weight
-    })
+    const anchorNode = this.eventChain.find(
+      this.eventChain.getNodeKeys().find((nodeVal: string) => {
+        const itEventInfo = this.planInfoMap[nodeVal]
+        const { weight: itWeight = 0, before, after } = itEventInfo
+        return !before && !after && itWeight >= weight
+      }) || ''
+    )
     if (!anchorNode) {
       this.eventChain.unshift(name)
       return
@@ -57,9 +59,9 @@ class Plan {
 
     let afterEventNode = anchorNode.next
     while (afterEventNode) {
-      const eventInfo = this.planInfoMap[afterEventNode.value]
-      if (eventInfo.after !== anchorNode.value) {
-        this.eventChain.insertBefore(name, afterEventNode.value)
+      const eventInfo = this.planInfoMap[afterEventNode.key]
+      if (eventInfo.after !== anchorNode.key) {
+        this.eventChain.insertBefore(afterEventNode.key, name)
         return
       }
       afterEventNode = afterEventNode.next
@@ -74,30 +76,32 @@ class Plan {
       console.error('before event do not exist')
       return
     }
-    let beforeChildAncNode = this.eventChain.find((nodeVal: string) => {
-      const itEventInfo = this.planInfoMap[nodeVal]
-      const { before } = itEventInfo
-      return before === anchorNode.value
-    })
+    let beforeChildAncNode = this.eventChain.find(
+      this.eventChain.getNodeKeys().find((nodeVal: string) => {
+        const itEventInfo = this.planInfoMap[nodeVal]
+        const { before } = itEventInfo
+        return before === anchorNode.key
+      }) || ''
+    )
     if (!beforeChildAncNode) {
-      this.eventChain.insertBefore(name, anchorNode.value)
+      this.eventChain.insertBefore(anchorNode.key, name)
       return
     }
-    let afterAncInfo: any = this.planInfoMap[beforeChildAncNode.value]
+    let afterAncInfo: any = this.planInfoMap[beforeChildAncNode.key]
     while (
       beforeChildAncNode &&
       afterAncInfo &&
-      afterAncInfo.before === anchorNode.value &&
+      afterAncInfo.before === anchorNode.key &&
       (afterAncInfo.weight || 0) >= weight
     ) {
       beforeChildAncNode = beforeChildAncNode.next
       afterAncInfo = beforeChildAncNode
-        ? this.planInfoMap[beforeChildAncNode.value]
+        ? this.planInfoMap[beforeChildAncNode.key]
         : null
     }
 
     if (beforeChildAncNode) {
-      this.eventChain.insertBefore(name, beforeChildAncNode.value)
+      this.eventChain.insertBefore(beforeChildAncNode.key, name)
     }
   }
 
@@ -107,30 +111,32 @@ class Plan {
       console.error('after event do not exist')
       return
     }
-    let afterChildAncNode = this.eventChain.find((nodeVal: string) => {
-      const itEventInfo = this.planInfoMap[nodeVal]
-      const { after } = itEventInfo
-      return after === anchorNode.value
-    })
+    let afterChildAncNode = this.eventChain.find(
+      this.eventChain.getNodeKeys().find((nodeVal: string) => {
+        const itEventInfo = this.planInfoMap[nodeVal]
+        const { after } = itEventInfo
+        return after === anchorNode.key
+      }) || ''
+    )
     if (!afterChildAncNode) {
-      this.eventChain.insertAfter(name, anchorNode.value)
+      this.eventChain.insertAfter(anchorNode.key, name)
       return
     }
-    let afterAncInfo: any = this.planInfoMap[afterChildAncNode.value]
+    let afterAncInfo: any = this.planInfoMap[afterChildAncNode.key]
     while (
       afterChildAncNode &&
       afterAncInfo &&
-      afterAncInfo.after === anchorNode.value &&
+      afterAncInfo.after === anchorNode.key &&
       (afterAncInfo.weight || 0) >= weight
     ) {
       afterChildAncNode = afterChildAncNode.next
       afterAncInfo = afterChildAncNode
-        ? this.planInfoMap[afterChildAncNode.value]
+        ? this.planInfoMap[afterChildAncNode.key]
         : null
     }
 
     if (afterChildAncNode) {
-      this.eventChain.insertBefore(name, afterChildAncNode.value)
+      this.eventChain.insertBefore(afterChildAncNode.key, name)
     } else {
       this.eventChain.push(name)
     }
@@ -144,15 +150,15 @@ class Plan {
   }
 
   public getPlan() {
-    return this.eventChain.getNodeValues()
+    return this.eventChain.getNodeKeys()
   }
 
-  public async execPlan() {
+  public execPlan() {
     const chain = this.eventChain
-    let eventNode = chain.getFirstNode()
+    let eventNode = chain.getHead().next
     while (eventNode) {
-      const eventName = eventNode.value
-      await this.eventsEmitt.emit(eventName)
+      const eventName = eventNode.key
+      this.eventsEmitt.emit(eventName)
       eventNode = eventNode.next
     }
   }
