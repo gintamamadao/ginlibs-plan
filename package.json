@@ -19,7 +19,11 @@
     "del:lib": "rm -rf lib",
     "pub": "lerna publish"
   },
-  "keywords": [],
+  "keywords": [
+    "plan",
+    "scheme",
+    "schedule"
+  ],
   "author": "gintamamadao",
   "license": "MIT",
   "repository": {
@@ -71,6 +75,5 @@
     "ginlibs-chain": "^1.0.0",
     "ginlibs-events": "^0.0.14",
     "ginlibs-type-check": "^0.0.8"
-  },
-  "gitHead": "d5d2e52c476194fd1e3ec5e0108ffedda5dfac19"
+  }
 }
