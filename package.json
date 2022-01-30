@@ -1,6 +1,6 @@
 {
   "name": "ginlibs-plan",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "used to handle the execution order of multiple registered events, you can set the weight of the event, dependent on the event",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -62,8 +62,7 @@
     "prettier": "^2.0.5",
     "rimraf": "^3.0.2",
     "rollup": "^2.23.0",
-    "rollup-plugin-add-global-ts": "^0.0.9",
-    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-add-global-ts": "^2.2.0",
     "rollup-plugin-terser": "^6.1.0",
     "rollup-plugin-typescript2": "^0.27.1",
     "ts-jest": "^26.3.0",
