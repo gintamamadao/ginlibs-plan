@@ -1,5 +1,5 @@
 import { Chain } from 'ginlibs-chain'
-import Events from 'ginlibs-events'
+import { Events } from 'ginlibs-events'
 
 export interface EventPlanInfo {
   name: string

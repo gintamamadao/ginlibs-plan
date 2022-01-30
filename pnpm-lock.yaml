@@ -22,7 +22,7 @@ specifiers:
   eslint-plugin-import: ^2.22.0
   eslint-plugin-prettier: ^3.1.4
   ginlibs-chain: ^2.0.0
-  ginlibs-events: ^1.0.0
+  ginlibs-events: ^1.1.0
   ginlibs-type-check: ^1.0.0
   glob: ^7.1.6
   husky: ^4.2.5
@@ -31,8 +31,7 @@ specifiers:
   prettier: ^2.0.5
   rimraf: ^3.0.2
   rollup: ^2.23.0
-  rollup-plugin-add-global-ts: ^0.0.9
-  rollup-plugin-babel: ^4.4.0
+  rollup-plugin-add-global-ts: ^2.2.0
   rollup-plugin-terser: ^6.1.0
   rollup-plugin-typescript2: ^0.27.1
   ts-jest: ^26.3.0
@@ -41,7 +40,7 @@ specifiers:
 
 dependencies:
   ginlibs-chain: 2.0.0
-  ginlibs-events: 1.0.0
+  ginlibs-events: 1.1.0
   ginlibs-type-check: 1.0.0
 
 devDependencies:
@@ -72,8 +71,7 @@ devDependencies:
   prettier: 2.2.1
   rimraf: 3.0.2
   rollup: 2.47.0
-  rollup-plugin-add-global-ts: 0.0.9
-  rollup-plugin-babel: 4.4.0_@babel+core@7.14.0+rollup@2.47.0
+  rollup-plugin-add-global-ts: 2.2.0
   rollup-plugin-terser: 6.1.0_rollup@2.47.0
   rollup-plugin-typescript2: 0.27.3_rollup@2.47.0+typescript@4.2.4
   ts-jest: 26.5.6_jest@26.6.3+typescript@4.2.4
@@ -217,7 +215,7 @@ packages:
   /@babel/helper-explode-assignable-expression/7.13.0:
     resolution: {integrity: sha512-qS0peLTDP8kOisG1blKbaoBg/o9OSa1qoumMjTK5pM+KDTtpxpsiubnCGP34vK8BXGcb2M9eigwgvoJryrzwWA==}
     dependencies:
-      '@babel/types': 7.14.1
+      '@babel/types': 7.14.5
     dev: true
 
   /@babel/helper-function-name/7.12.13:
@@ -240,7 +238,7 @@ packages:
   /@babel/helper-get-function-arity/7.12.13:
     resolution: {integrity: sha512-DjEVzQNz5LICkzN0REdpD5prGoidvbdYk1BVgRUOINaWJP2t6avB27X1guXK1kXNrX0WMfsrm1A/ZBthYuIMQg==}
     dependencies:
-      '@babel/types': 7.14.1
+      '@babel/types': 7.14.5
     dev: true
 
   /@babel/helper-get-function-arity/7.14.5:
@@ -269,7 +267,7 @@ packages:
   /@babel/helper-member-expression-to-functions/7.13.12:
     resolution: {integrity: sha512-48ql1CLL59aKbU94Y88Xgb2VFy7a95ykGRbJJaaVv+LX5U8wFpLfiGXJJGUozsmA1oEh/o5Bp60Voq7ACyA/Sw==}
     dependencies:
-      '@babel/types': 7.14.1
+      '@babel/types': 7.14.5
     dev: true
 
   /@babel/helper-module-imports/7.13.12:
@@ -367,8 +365,8 @@ packages:
     dependencies:
       '@babel/helper-function-name': 7.12.13
       '@babel/template': 7.12.13
-      '@babel/traverse': 7.14.0
-      '@babel/types': 7.14.1
+      '@babel/traverse': 7.14.7
+      '@babel/types': 7.14.5
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -1748,8 +1746,8 @@ packages:
   /@types/babel__core/7.1.14:
     resolution: {integrity: sha512-zGZJzzBUVDo/eV6KgbE0f0ZI7dInEYvo12Rb70uNQDshC3SkRMb67ja0GgRHZgAX3Za6rhaWlvbDO8rrGyAb1g==}
     dependencies:
-      '@babel/parser': 7.14.1
-      '@babel/types': 7.14.1
+      '@babel/parser': 7.14.7
+      '@babel/types': 7.14.5
       '@types/babel__generator': 7.6.2
       '@types/babel__template': 7.4.0
       '@types/babel__traverse': 7.11.1
@@ -1758,20 +1756,20 @@ packages:
   /@types/babel__generator/7.6.2:
     resolution: {integrity: sha512-MdSJnBjl+bdwkLskZ3NGFp9YcXGx5ggLpQQPqtgakVhsWK0hTtNYhjpZLlWQTviGTvF8at+Bvli3jV7faPdgeQ==}
     dependencies:
-      '@babel/types': 7.14.1
+      '@babel/types': 7.14.5
     dev: true
 
   /@types/babel__template/7.4.0:
     resolution: {integrity: sha512-NTPErx4/FiPCGScH7foPyr+/1Dkzkni+rHiYHHoTjvwou7AQzJkNeD60A9CXRy+ZEN2B1bggmkTMCDb+Mv5k+A==}
     dependencies:
-      '@babel/parser': 7.14.1
-      '@babel/types': 7.14.1
+      '@babel/parser': 7.14.7
+      '@babel/types': 7.14.5
     dev: true
 
   /@types/babel__traverse/7.11.1:
     resolution: {integrity: sha512-Vs0hm0vPahPMYi9tDjtP66llufgO3ST16WXaSTtDGEl9cewAl3AibmxWw6TINOqHPT9z0uABKAYjT9jNSg4npw==}
     dependencies:
-      '@babel/types': 7.14.1
+      '@babel/types': 7.14.5
     dev: true
 
   /@types/buble/0.19.2:
@@ -2271,7 +2269,7 @@ packages:
     engines: {node: '>= 10.14.2'}
     dependencies:
       '@babel/template': 7.12.13
-      '@babel/types': 7.14.1
+      '@babel/types': 7.14.5
       '@types/babel__core': 7.1.14
       '@types/babel__traverse': 7.11.1
     dev: true
@@ -3318,10 +3316,6 @@ packages:
     engines: {node: '>=4.0'}
     dev: true
 
-  /estree-walker/0.6.1:
-    resolution: {integrity: sha512-SqmZANLWS0mnatqbSfRP5g8OXZC12Fgg1IwNtLsyHDzJizORW4khDfjPqJZsemPWBB2uqykUah5YpQ6epsqC/w==}
-    dev: true
-
   /estree-walker/1.0.1:
     resolution: {integrity: sha512-1fMXF3YP4pZZVozF8j/ZLfvnR8NSIljt56UhbZ5PeeDmmGHpgpdwQt7ITlGvYaQukCvuBRMLEiKiYC+oeIg4cg==}
     dev: true
@@ -3720,8 +3714,8 @@ packages:
       ginlibs-utils: 0.0.11
     dev: false
 
-  /ginlibs-events/1.0.0:
-    resolution: {integrity: sha512-dXgUyo9v/3ZOkA1d6gh1nR3PPGoyWFHzJcIuvs4ghR1rNRd98Fa66LpyX3OcHiAjUi09V6ZMnDT1BbbypqG1XQ==}
+  /ginlibs-events/1.1.0:
+    resolution: {integrity: sha512-tGE/O7CbY5hgwVGwgII8eZuExjAFTmz4vSr0bmsatB2tBMn0JTl4lcKC27UQiRzJqaA/y5dR5blXdlljmfEe1w==}
     dependencies:
       ginlibs-type-check: 1.0.0
     dev: false
@@ -4556,7 +4550,7 @@ packages:
     resolution: {integrity: sha512-kPKUrQtc8aYwBV7CqBg5pu+tmYXlvFlSFYn18ev4gPFtrRzB15N2gW/Roew3187q2w2eHuu0MU9TJz6w0/nPEg==}
     engines: {node: '>= 10.14.2'}
     dependencies:
-      '@babel/traverse': 7.14.0
+      '@babel/traverse': 7.14.7
       '@jest/environment': 26.6.2
       '@jest/source-map': 26.6.2
       '@jest/test-result': 26.6.2
@@ -6098,8 +6092,8 @@ packages:
       glob: 7.1.7
     dev: true
 
-  /rollup-plugin-add-global-ts/0.0.9:
-    resolution: {integrity: sha512-pS2A3R8D16acLkNnTRmFR6q5ptOAAa3lsFzcYV4Iq0WusRkMPbD5qpiwJk/njm8xsP0jKWFPn89oFkgYktw2Ug==}
+  /rollup-plugin-add-global-ts/2.2.0:
+    resolution: {integrity: sha512-l7FHkRVgibGKvaHjLinkh5KwEWdwT15S1cUeh7KW6bxFW7wcFenB81TbuUPS72kPemvsMISA8fW6hdVdi5Jgtw==}
     dependencies:
       '@babel/generator': 7.14.5
       '@babel/parser': 7.14.7
@@ -6112,19 +6106,6 @@ packages:
       shelljs: 0.8.4
     transitivePeerDependencies:
       - supports-color
-    dev: true
-
-  /rollup-plugin-babel/4.4.0_@babel+core@7.14.0+rollup@2.47.0:
-    resolution: {integrity: sha512-Lek/TYp1+7g7I+uMfJnnSJ7YWoD58ajo6Oarhlex7lvUce+RCKRuGRSgztDO3/MF/PuGKmUL5iTHKf208UNszw==}
-    deprecated: This package has been deprecated and is no longer maintained. Please use @rollup/plugin-babel.
-    peerDependencies:
-      '@babel/core': 7 || ^7.0.0-rc.2
-      rollup: '>=0.60.0 <3'
-    dependencies:
-      '@babel/core': 7.14.0
-      '@babel/helper-module-imports': 7.13.12
-      rollup: 2.47.0
-      rollup-pluginutils: 2.8.2
     dev: true
 
   /rollup-plugin-terser/6.1.0_rollup@2.47.0:
@@ -6152,12 +6133,6 @@ packages:
       rollup: 2.47.0
       tslib: 2.0.1
       typescript: 4.2.4
-    dev: true
-
-  /rollup-pluginutils/2.8.2:
-    resolution: {integrity: sha512-EEp9NhnUkwY8aif6bxgovPHMoMoNr2FulJziTndpt5H9RdwC47GSGuII9XxpSdzVGM0GWrNPHV6ie1LTNJPaLQ==}
-    dependencies:
-      estree-walker: 0.6.1
     dev: true
 
   /rollup/2.47.0:
