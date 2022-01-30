@@ -22,8 +22,8 @@ specifiers:
   eslint-plugin-import: ^2.22.0
   eslint-plugin-prettier: ^3.1.4
   ginlibs-chain: ^2.0.0
-  ginlibs-events: ^0.0.14
-  ginlibs-type-check: ^0.0.8
+  ginlibs-events: ^1.0.0
+  ginlibs-type-check: ^1.0.0
   glob: ^7.1.6
   husky: ^4.2.5
   jest: ^26.4.2
@@ -41,8 +41,8 @@ specifiers:
 
 dependencies:
   ginlibs-chain: 2.0.0
-  ginlibs-events: 0.0.14
-  ginlibs-type-check: 0.0.8
+  ginlibs-events: 1.0.0
+  ginlibs-type-check: 1.0.0
 
 devDependencies:
   '@babel/core': 7.14.0
@@ -3720,10 +3720,10 @@ packages:
       ginlibs-utils: 0.0.11
     dev: false
 
-  /ginlibs-events/0.0.14:
-    resolution: {integrity: sha512-6feXCuNVYrgdjWL1HcAWS9RUIeBqoCqHNAz/woh+bA3V8SgtZmG35PbHty27LsLvZab08r/bR3WBeVAWyVFBZg==}
+  /ginlibs-events/1.0.0:
+    resolution: {integrity: sha512-dXgUyo9v/3ZOkA1d6gh1nR3PPGoyWFHzJcIuvs4ghR1rNRd98Fa66LpyX3OcHiAjUi09V6ZMnDT1BbbypqG1XQ==}
     dependencies:
-      ginlibs-type-check: 0.0.8
+      ginlibs-type-check: 1.0.0
     dev: false
 
   /ginlibs-file-util/0.0.4:
@@ -3742,6 +3742,10 @@ packages:
 
   /ginlibs-type-check/0.0.8:
     resolution: {integrity: sha512-RAMjwkrU68ZfL/2kfxNhVe7Ym0ATILo9z7ZBEfMh0kXSNyhSBkwHChnBNdkReSdVGt5zHjLPeyIPonFEdP35xA==}
+
+  /ginlibs-type-check/1.0.0:
+    resolution: {integrity: sha512-63wyzErvsMS4m5yjY+t0cO32Wb6Alaeh6o/bS6jX8XnRmi7xEHDLeyz54/ubZB7znKmCJ2lk+a4j3OGJh/TnFg==}
+    dev: false
 
   /ginlibs-utils/0.0.11:
     resolution: {integrity: sha512-3uUEEpf3Jb+5wn508VBXbLdbNLm+cK6zKicEhtBOYk1qGkCqxQwZfH7dmt/X+hPbe53/fCIAKCcynrt854W9nw==}
