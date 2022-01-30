@@ -1,6 +1,6 @@
 {
   "name": "ginlibs-plan",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "description": "used to handle the execution order of multiple registered events, you can set the weight of the event, dependent on the event",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -14,7 +14,7 @@
     "test": "jest",
     "test:cov": "jest --coverage --noStackTrace",
     "dev": "rollup -c rollup.config.js -w",
-    "build": "rollup -c rollup.config.js",
+    "build": "rimraf lib && rollup -c rollup.config.js",
     "commit": "git-cz",
     "del:lib": "rm -rf lib",
     "pub": "lerna publish"
