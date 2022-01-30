@@ -45,13 +45,11 @@ class Plan {
   }
 
   private addByWeight(name: string, weight: number) {
-    const anchorNode = this.eventChain.find(
-      this.eventChain.getNodeKeys().find((nodeVal: string) => {
-        const itEventInfo = this.planInfoMap[nodeVal]
-        const { weight: itWeight = 0, before, after } = itEventInfo
-        return !before && !after && itWeight >= weight
-      }) || ''
-    )
+    const anchorNode = this.eventChain.findFuncNode((nodeVal: string) => {
+      const itEventInfo = this.planInfoMap[nodeVal]
+      const { weight: itWeight = 0, before, after } = itEventInfo
+      return !before && !after && itWeight >= weight
+    })
     if (!anchorNode) {
       this.eventChain.unshift(name)
       return
@@ -76,13 +74,11 @@ class Plan {
       console.error('before event do not exist')
       return
     }
-    let beforeChildAncNode = this.eventChain.find(
-      this.eventChain.getNodeKeys().find((nodeVal: string) => {
-        const itEventInfo = this.planInfoMap[nodeVal]
-        const { before } = itEventInfo
-        return before === anchorNode.key
-      }) || ''
-    )
+    let beforeChildAncNode = this.eventChain.findFuncNode((nodeVal: string) => {
+      const itEventInfo = this.planInfoMap[nodeVal]
+      const { before } = itEventInfo
+      return before === anchorNode.key
+    })
     if (!beforeChildAncNode) {
       this.eventChain.insertBefore(anchorNode.key, name)
       return
@@ -111,13 +107,11 @@ class Plan {
       console.error('after event do not exist')
       return
     }
-    let afterChildAncNode = this.eventChain.find(
-      this.eventChain.getNodeKeys().find((nodeVal: string) => {
-        const itEventInfo = this.planInfoMap[nodeVal]
-        const { after } = itEventInfo
-        return after === anchorNode.key
-      }) || ''
-    )
+    let afterChildAncNode = this.eventChain.findFuncNode((nodeVal: string) => {
+      const itEventInfo = this.planInfoMap[nodeVal]
+      const { after } = itEventInfo
+      return after === anchorNode.key
+    })
     if (!afterChildAncNode) {
       this.eventChain.insertAfter(anchorNode.key, name)
       return
