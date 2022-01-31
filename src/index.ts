@@ -18,7 +18,7 @@ class Plan {
     this.eventsEmitt = new Events(context)
   }
 
-  public addToPlan(info: EventPlanInfo) {
+  public addToPlan = (info: EventPlanInfo) => {
     const { name, handle, weight = 0, before, after } = info
     if (before && after) {
       console.error('before and after can not exist at the same')
@@ -44,7 +44,7 @@ class Plan {
     }
   }
 
-  private addByWeight(name: string, weight: number) {
+  private addByWeight = (name: string, weight: number) => {
     const anchorNode = this.eventChain.findFuncNode((nodeVal: string) => {
       const itEventInfo = this.planInfoMap[nodeVal]
       const { weight: itWeight = 0, before, after } = itEventInfo
@@ -68,7 +68,7 @@ class Plan {
     return
   }
 
-  private addByBefore(before: string, name: string, weight = 0) {
+  private addByBefore = (before: string, name: string, weight = 0) => {
     const anchorNode = this.eventChain.find(before)
     if (!anchorNode) {
       console.error('before event do not exist')
@@ -101,7 +101,7 @@ class Plan {
     }
   }
 
-  private addByAfter(after: string, name: string, weight = 0) {
+  private addByAfter = (after: string, name: string, weight = 0) => {
     const anchorNode = this.eventChain.find(after)
     if (!anchorNode) {
       console.error('after event do not exist')
@@ -136,18 +136,18 @@ class Plan {
     }
   }
 
-  public getPlanInfo() {
+  public getPlanInfo = () => {
     const plan = this.getPlan()
     return plan.map((name) => {
       return this.planInfoMap[name]
     })
   }
 
-  public getPlan() {
+  public getPlan = () => {
     return this.eventChain.getNodeKeys()
   }
 
-  public execPlan() {
+  public execPlan = () => {
     const chain = this.eventChain
     let eventNode = chain.getHead().next
     while (eventNode) {

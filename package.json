@@ -1,6 +1,6 @@
 {
   "name": "ginlibs-plan",
-  "version": "3.4.0",
+  "version": "3.5.0",
   "description": "used to handle the execution order of multiple registered events, you can set the weight of the event, dependent on the event",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -72,6 +72,7 @@
   "dependencies": {
     "ginlibs-chain": "^2.1.0",
     "ginlibs-events": "^2.1.0",
-    "ginlibs-type-check": "^2.0.0"
+    "ginlibs-type-check": "^2.0.0",
+    "ginlibs-utils": "^1.0.0"
   }
 }

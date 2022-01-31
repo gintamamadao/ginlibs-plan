@@ -24,6 +24,7 @@ specifiers:
   ginlibs-chain: ^2.1.0
   ginlibs-events: ^2.1.0
   ginlibs-type-check: ^2.0.0
+  ginlibs-utils: ^1.0.0
   glob: ^7.1.6
   husky: ^4.2.5
   jest: ^26.4.2
@@ -42,6 +43,7 @@ dependencies:
   ginlibs-chain: 2.1.0
   ginlibs-events: 2.1.0
   ginlibs-type-check: 2.0.0
+  ginlibs-utils: 1.0.0
 
 devDependencies:
   '@babel/core': 7.14.0
@@ -3745,6 +3747,12 @@ packages:
     resolution: {integrity: sha512-3uUEEpf3Jb+5wn508VBXbLdbNLm+cK6zKicEhtBOYk1qGkCqxQwZfH7dmt/X+hPbe53/fCIAKCcynrt854W9nw==}
     dependencies:
       ginlibs-type-check: 0.0.8
+    dev: false
+
+  /ginlibs-utils/1.0.0:
+    resolution: {integrity: sha512-bMzS+FEQGZxrg3tG3X7KFLLVh46g9/218O0LnqqDGD0wY4Q1+5iRUkDoghighG85I/0xkB5Ht6ac4A6HeUkCmQ==}
+    dependencies:
+      ginlibs-type-check: 2.0.0
     dev: false
 
   /git-raw-commits/2.0.10:
