@@ -1,6 +1,7 @@
 import { Chain } from 'ginlibs-chain'
 import { Events } from 'ginlibs-events'
 import { isFunc } from 'ginlibs-type-check'
+import { AsyncLock } from 'ginlibs-lock'
 import EventQueue from 'ginlibs-queue'
 
 export interface EventPlanInfo {
@@ -59,25 +60,44 @@ class Plan {
   }
 
   private addByWeight = (name: string, weight: number) => {
-    const anchorNode = this.eventChain.findFuncNode((nodeVal: string) => {
-      const itEventInfo = this.planInfoMap[nodeVal]
-      const { weight: itWeight = 0, before, after } = itEventInfo
-      return !before && !after && itWeight >= weight
-    })
-    if (!anchorNode) {
+    const heavierAnchorNode = this.eventChain.findFuncNode(
+      (nodeVal: string) => {
+        const itEventInfo = this.planInfoMap[nodeVal]
+        const { weight: itWeight = 0, before, after } = itEventInfo
+        return !before && !after && itWeight >= weight
+      }
+    )
+    if (!heavierAnchorNode) {
       this.eventChain.unshift(name)
       return
     }
 
-    let afterEventNode = anchorNode.next
-    while (afterEventNode) {
-      const eventInfo = this.planInfoMap[afterEventNode.key]
-      if (eventInfo.after !== anchorNode.key) {
-        this.eventChain.insertBefore(afterEventNode.key, name)
-        return
+    let heavierNextEventNode = heavierAnchorNode.next
+    while (heavierNextEventNode) {
+      const nextEventInfo = this.planInfoMap[heavierNextEventNode.key]
+      const {
+        before: nextENBefor,
+        after: nextENAfter,
+        weight: nextENWeight = 0,
+      } = nextEventInfo
+
+      if (nextENBefor || nextENAfter || nextENWeight >= weight) {
+        heavierNextEventNode = heavierNextEventNode.next
+        continue
       }
-      afterEventNode = afterEventNode.next
+      const eventKeys = this.eventChain.getNodeKeys()
+      const lighterNodeKey = heavierNextEventNode.key
+      let anchorKey = lighterNodeKey
+      for (const key of eventKeys) {
+        const eventInfo = this.planInfoMap[key]
+        if (eventInfo.before === lighterNodeKey) {
+          anchorKey = key
+        }
+      }
+      this.eventChain.insertBefore(anchorKey, name)
+      return
     }
+
     this.eventChain.push(name)
     return
   }
@@ -161,7 +181,7 @@ class Plan {
     return this.eventChain.getNodeKeys()
   }
 
-  public execPlan = () => {
+  private emitEvent = () => {
     const chain = this.eventChain
     let eventNode = chain.getHead().next
     while (eventNode) {
@@ -169,9 +189,25 @@ class Plan {
       this.eventsEmitt.emit(eventName)
       eventNode = eventNode.next
     }
+  }
+
+  public execPlan = () => {
+    this.emitEvent()
     if (this.isAsync) {
       this.eventQueue.trigger()
     }
+  }
+
+  public execAsyncPlan = async () => {
+    this.emitEvent()
+    const alock = new AsyncLock()
+    this.eventQueue
+      .add(() => {
+        alock.unLock()
+      })
+      .trigger()
+
+    await alock.getLock()
   }
 }
 
