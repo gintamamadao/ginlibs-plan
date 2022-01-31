@@ -1,39 +1,6 @@
 import Plan from '../index'
 
 describe('事件计划 Plan', () => {
-  test('事件权重', () => {
-    const plan = new Plan()
-    let str = ''
-    plan.addToPlan({
-      name: 'a',
-      handle: () => {
-        str = str + 'a'
-      },
-      weight: 1,
-    })
-    plan.addToPlan({
-      name: 'b',
-      handle: () => {
-        str = str + 'b'
-      },
-      weight: 10,
-    })
-    plan.addToPlan({
-      name: 'c',
-      handle: () => {
-        str = str + 'c'
-      },
-      weight: 100,
-    })
-
-    expect(plan.getPlan()).toStrictEqual(
-      expect.objectContaining(['c', 'b', 'a'])
-    )
-    plan.execPlan()
-
-    expect(str).toBe('cba')
-  })
-
   test('before', async () => {
     const plan = new Plan()
     let str = ''

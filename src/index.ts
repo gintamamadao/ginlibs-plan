@@ -90,8 +90,9 @@ class Plan {
       let anchorKey = lighterNodeKey
       for (const key of eventKeys) {
         const eventInfo = this.planInfoMap[key]
-        if (eventInfo.before === lighterNodeKey) {
+        if (eventInfo.before === lighterNodeKey || key === lighterNodeKey) {
           anchorKey = key
+          break
         }
       }
       this.eventChain.insertBefore(anchorKey, name)
@@ -108,30 +109,28 @@ class Plan {
       console.error('before event do not exist')
       return
     }
-    let beforeChildAncNode = this.eventChain.findFuncNode((nodeVal: string) => {
+    let beforeAncNode = this.eventChain.findFuncNode((nodeVal: string) => {
       const itEventInfo = this.planInfoMap[nodeVal]
       const { before } = itEventInfo
       return before === anchorNode.key
     })
-    if (!beforeChildAncNode) {
+    if (!beforeAncNode) {
       this.eventChain.insertBefore(anchorNode.key, name)
       return
     }
-    let afterAncInfo: any = this.planInfoMap[beforeChildAncNode.key]
+    let afterAncInfo: any = this.planInfoMap[beforeAncNode.key]
     while (
-      beforeChildAncNode &&
+      beforeAncNode &&
       afterAncInfo &&
       afterAncInfo.before === anchorNode.key &&
       (afterAncInfo.weight || 0) >= weight
     ) {
-      beforeChildAncNode = beforeChildAncNode.next
-      afterAncInfo = beforeChildAncNode
-        ? this.planInfoMap[beforeChildAncNode.key]
-        : null
+      beforeAncNode = beforeAncNode.next
+      afterAncInfo = beforeAncNode ? this.planInfoMap[beforeAncNode.key] : null
     }
 
-    if (beforeChildAncNode) {
-      this.eventChain.insertBefore(beforeChildAncNode.key, name)
+    if (beforeAncNode) {
+      this.eventChain.insertBefore(beforeAncNode.key, name)
     }
   }
 
