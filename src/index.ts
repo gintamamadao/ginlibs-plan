@@ -95,22 +95,6 @@ class Plan {
     return
   }
 
-  private findNodeTopLegalBefore = (nodeKey: string) => {
-    const eventKeys = this.eventChain.getNodeKeys()
-    const find = (findKey: string) => {
-      for (const key of eventKeys) {
-        const eventInfo = this.planInfoMap[key]
-        if (key === findKey) {
-          return key
-        }
-        if (eventInfo.before === findKey) {
-          return find(key)
-        }
-      }
-    }
-    return find(nodeKey)
-  }
-
   private addByBefore = (before: string, name: string, weight = 0) => {
     const anchorNode = this.eventChain.find(before)
     if (!anchorNode) {
@@ -142,36 +126,63 @@ class Plan {
       console.error('after event do not exist')
       return
     }
-    let afterChildAncNode = this.eventChain.findFuncNode((nodeVal: string) => {
+    const afterNodes = this.eventChain.findFuncNodes((nodeVal: string) => {
       const itEventInfo = this.planInfoMap[nodeVal]
-      const { after } = itEventInfo
-      return after === anchorNode.key
+      const { after: itAfter } = itEventInfo
+      return itAfter === anchorNode.key
     })
-    if (!afterChildAncNode) {
+    const lighterNodes = afterNodes.filter((it) => {
+      const itEventInfo = this.planInfoMap[it.key]
+      const { weight: itWeight = 0 } = itEventInfo
+      return itWeight < weight
+    })
+    if (afterNodes.length <= 0) {
       this.eventChain.insertAfter(anchorNode.key, name)
       return
     }
-    let afterAncInfo: any = this.planInfoMap[afterChildAncNode.key]
-    while (
-      afterChildAncNode &&
-      afterAncInfo &&
-      afterAncInfo.after === anchorNode.key &&
-      (afterAncInfo.weight || 0) >= weight
-    ) {
-      afterChildAncNode = afterChildAncNode.next
-      afterAncInfo = afterChildAncNode
-        ? this.planInfoMap[afterChildAncNode.key]
-        : null
+    if (lighterNodes.length <= 0) {
+      const anchorKey = this.findNodeTopLegalAfter(anchorNode.key)
+      this.eventChain.insertAfter(anchorKey, name)
+      return
     }
-
-    if (afterChildAncNode) {
-      this.eventChain.insertBefore(afterChildAncNode.key, name)
-    } else {
-      this.eventChain.push(name)
-    }
+    const lighterNode = lighterNodes[0]
+    const anchorKey = this.findNodeTopLegalBefore(lighterNode.key)
+    this.eventChain.insertBefore(anchorKey, name)
   }
 
-  public getPlanInfo = () => {
+  private findNodeTopLegalBefore = (nodeKey: string) => {
+    const eventKeys = this.eventChain.getNodeKeys()
+    const find = (findKey: string) => {
+      for (const key of eventKeys) {
+        const eventInfo = this.planInfoMap[key]
+        if (key === findKey) {
+          return key
+        }
+        if (eventInfo.before === findKey) {
+          return find(key)
+        }
+      }
+    }
+    return find(nodeKey)
+  }
+
+  private findNodeTopLegalAfter = (nodeKey: string) => {
+    const eventKeys = this.eventChain.getNodeKeys().reverse()
+    const find = (findKey: string) => {
+      for (const key of eventKeys) {
+        const eventInfo = this.planInfoMap[key]
+        if (key === findKey) {
+          return key
+        }
+        if (eventInfo.after === findKey) {
+          return find(key)
+        }
+      }
+    }
+    return find(nodeKey)
+  }
+
+  public getPlanInfos = () => {
     const plan = this.getPlan()
     return plan.map((name) => {
       return this.planInfoMap[name]

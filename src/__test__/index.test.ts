@@ -1,83 +1,71 @@
 import Plan from '../index'
 
+const noop = () => undefined
+
 describe('事件计划 Plan', () => {
-  test('after', async () => {
+  test('addToPlan', async () => {
     const plan = new Plan()
     let str = ''
     plan.addToPlan({
       name: 'a',
       handle: () => {
-        str = str + 'a'
+        str += '1'
       },
-      weight: 1,
+      weight: 10,
     })
     plan.addToPlan({
-      name: 'a1',
+      name: 'a',
       handle: () => {
-        str = str + 'a1'
-      },
-      after: 'a',
-      weight: 100,
-    })
-    plan.addToPlan({
-      name: 'a2',
-      handle: () => {
-        str = str + 'a2'
-      },
-      after: 'a',
-      weight: 1,
-    })
-    plan.addToPlan({
-      name: 'b',
-      handle: () => {
-        str = str + 'b'
+        str += '2'
       },
       weight: 10,
     })
 
-    expect(plan.getPlan()).toStrictEqual(
-      expect.objectContaining(['b', 'a', 'a1', 'a2'])
-    )
+    plan.execPlan()
+
+    expect(str).toBe('12')
+  })
+
+  test('getPlanInfo', async () => {
+    const plan = new Plan()
+    plan.addToPlan({
+      name: 'a',
+      handle: noop,
+      weight: 10,
+    })
+    const infos = plan.getPlanInfos()
+
+    expect(infos[0].name).toBe('a')
+    expect(infos[0].weight).toBe(10)
   })
 
   test('after & before', async () => {
     const plan = new Plan()
-    let str = ''
     plan.addToPlan({
       name: 'a',
-      handle: () => {
-        str = str + 'a'
-      },
+      handle: noop,
       weight: 10,
     })
     plan.addToPlan({
       name: 'a1',
-      handle: () => {
-        str = str + 'a1'
-      },
+      handle: noop,
       before: 'a',
       weight: 100,
     })
     plan.addToPlan({
       name: 'a2',
-      handle: () => {
-        str = str + 'a2'
-      },
+      handle: noop,
       after: 'a',
       weight: 100,
     })
     plan.addToPlan({
       name: 'b',
-      handle: () => {
-        str = str + 'b'
-      },
+      handle: noop,
       weight: 1,
     })
     plan.addToPlan({
       name: 'c',
-      handle: () => {
-        str = str + 'c'
-      },
+      handle: noop,
       weight: 100,
     })
 
