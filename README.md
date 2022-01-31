@@ -125,12 +125,14 @@ plan.addToPlan({
 
 # API
 
-### 初始化
+### 初始化 `new Plan(context, isAsync)`
 
-- 初始化时可以加入上下文，将作为参数传入每个事件函数
+- 初始化时可以加入上下文，
+  - context 参数，作为每个事件函数的上下文
+  - isAsync 参数，如果存在事件函数返回的是 Promise 对象并且需要该 Promise 转成完成状态后再向下执行事件，需要传入 true 作为 isAsync 参数，则所有异步事件都强制串行执行
 
 ```js
-const plan = new Plan(context)
+const plan = new Plan(context, false)
 ```
 
 ### `addToPlan(info)`
