@@ -72,6 +72,7 @@
   "dependencies": {
     "ginlibs-chain": "^2.1.0",
     "ginlibs-events": "^2.1.0",
+    "ginlibs-queue": "^1.0.0",
     "ginlibs-type-check": "^2.0.0",
     "ginlibs-utils": "^1.0.0"
   }

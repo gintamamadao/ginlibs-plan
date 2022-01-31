@@ -23,6 +23,7 @@ specifiers:
   eslint-plugin-prettier: ^3.1.4
   ginlibs-chain: ^2.1.0
   ginlibs-events: ^2.1.0
+  ginlibs-queue: ^1.0.0
   ginlibs-type-check: ^2.0.0
   ginlibs-utils: ^1.0.0
   glob: ^7.1.6
@@ -42,6 +43,7 @@ specifiers:
 dependencies:
   ginlibs-chain: 2.1.0
   ginlibs-events: 2.1.0
+  ginlibs-queue: 1.0.0
   ginlibs-type-check: 2.0.0
   ginlibs-utils: 1.0.0
 
@@ -3731,6 +3733,20 @@ packages:
       glob: 7.1.7
       shelljs: 0.8.4
     dev: true
+
+  /ginlibs-lock/1.0.0:
+    resolution: {integrity: sha512-UDlhq8VO4QB7Wbde7yq/2kn9xQTEOUqDL6TOCxt7HnTyHE/O62bun0HjVOfcgSWj9recki7UCczqUUWcnDZKlA==}
+    dependencies:
+      ginlibs-type-check: 2.0.0
+    dev: false
+
+  /ginlibs-queue/1.0.0:
+    resolution: {integrity: sha512-mjx/FxWMHBaa1qMbomycYhItwCxmtNtJFzYryp5PlZhsActjVkRp5YNEiB3PadNOVyYH/CEjn5fAV4OEQbUt8w==}
+    dependencies:
+      ginlibs-lock: 1.0.0
+      ginlibs-type-check: 2.0.0
+      ginlibs-utils: 1.0.0
+    dev: false
 
   /ginlibs-type-check/0.0.17:
     resolution: {integrity: sha512-jZh8hKflCjnAVLsNqGUy8hI26lI04OwFgBV7qdGq3bQ4M/xVEHCQNmIxU9TXm9qJ134R6S3+EkNYszLwKpOG3A==}

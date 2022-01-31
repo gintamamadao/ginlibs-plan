@@ -1,7 +1,7 @@
 import Plan from '../index'
 
 describe('事件计划 Plan', () => {
-  test('事件权重', async () => {
+  test('事件权重', () => {
     const plan = new Plan()
     let str = ''
     plan.addToPlan({
@@ -29,7 +29,7 @@ describe('事件计划 Plan', () => {
     expect(plan.getPlan()).toStrictEqual(
       expect.objectContaining(['c', 'b', 'a'])
     )
-    await plan.execPlan()
+    plan.execPlan()
 
     expect(str).toBe('cba')
   })

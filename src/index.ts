@@ -1,5 +1,7 @@
 import { Chain } from 'ginlibs-chain'
 import { Events } from 'ginlibs-events'
+import { isFunc } from 'ginlibs-type-check'
+import EventQueue from 'ginlibs-queue'
 
 export interface EventPlanInfo {
   name: string
@@ -9,13 +11,17 @@ export interface EventPlanInfo {
   after?: string
 }
 class Plan {
+  private isAsync = false
   private eventChain: Chain
   private eventsEmitt: Events
+  private eventQueue: EventQueue
   private planInfoMap: Record<string, EventPlanInfo> = {}
 
-  constructor(context: any = {}) {
+  constructor(context: any = {}, isAsync = false) {
     this.eventChain = new Chain()
     this.eventsEmitt = new Events(context)
+    this.eventQueue = new EventQueue()
+    this.isAsync = isAsync
   }
 
   public addToPlan = (info: EventPlanInfo) => {
@@ -25,7 +31,15 @@ class Plan {
       return
     }
     this.planInfoMap[name] = info
-    this.eventsEmitt.on(name, handle)
+    if (this.isAsync) {
+      this.eventsEmitt.on(name, (...args: any[]) => {
+        this.eventQueue.add(() => {
+          return isFunc(handle) && handle(...args)
+        })
+      })
+    } else {
+      this.eventsEmitt.on(name, handle)
+    }
     const eventNode = this.eventChain.find(name)
     if (eventNode) {
       return
@@ -154,6 +168,9 @@ class Plan {
       const eventName = eventNode.key
       this.eventsEmitt.emit(eventName)
       eventNode = eventNode.next
+    }
+    if (this.isAsync) {
+      this.eventQueue.trigger()
     }
   }
 }
