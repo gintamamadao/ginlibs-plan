@@ -147,3 +147,30 @@ const plan = new Plan(context, false)
 ### `execPlan()`
 
 - 执行事件
+
+# Test Report
+
+> Tests are using jest, to run the tests use:
+
+```sh
+$ npm run test:cov
+```
+
+report detail
+
+```sh
+----------|---------|----------|---------|---------|-----------------------
+File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
+----------|---------|----------|---------|---------|-----------------------
+All files |   95.74 |    81.67 |     100 |   95.74 |
+ index.ts |   95.74 |    81.67 |     100 |   95.74 | 31-32,101-102,126-127
+----------|---------|----------|---------|---------|-----------------------
+
+Test Suites: 5 passed, 5 total
+Tests:       15 passed, 15 total
+Snapshots:   0 total
+Time:        4.451 s
+Ran all test suites.
+```
+
+---
