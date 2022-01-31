@@ -1,45 +1,36 @@
 import Plan from '../index'
 
+const noop = () => undefined
+
 describe('事件计划 Plan', () => {
   test('before 1', async () => {
     const plan = new Plan()
-    let str = ''
     plan.addToPlan({
       name: 'a',
-      handle: () => {
-        str = str + 'a'
-      },
+      handle: noop,
       weight: 1,
     })
     plan.addToPlan({
       name: 'a1',
-      handle: () => {
-        str = str + 'a1'
-      },
+      handle: noop,
       before: 'a',
       weight: 1,
     })
     plan.addToPlan({
       name: 'a2',
-      handle: () => {
-        str = str + 'a2'
-      },
+      handle: noop,
       before: 'a',
       weight: 1,
     })
     plan.addToPlan({
       name: 'a3',
-      handle: () => {
-        str = str + 'a3'
-      },
+      handle: noop,
       before: 'a',
       weight: 10,
     })
     plan.addToPlan({
       name: 'b',
-      handle: () => {
-        str = str + 'b'
-      },
+      handle: noop,
       weight: 10,
     })
 
