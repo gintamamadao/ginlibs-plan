@@ -85,16 +85,8 @@ class Plan {
         heavierNextEventNode = heavierNextEventNode.next
         continue
       }
-      const eventKeys = this.eventChain.getNodeKeys()
       const lighterNodeKey = heavierNextEventNode.key
-      let anchorKey = lighterNodeKey
-      for (const key of eventKeys) {
-        const eventInfo = this.planInfoMap[key]
-        if (eventInfo.before === lighterNodeKey || key === lighterNodeKey) {
-          anchorKey = key
-          break
-        }
-      }
+      const anchorKey = this.findNodeTopLegalBefore(lighterNodeKey)
       this.eventChain.insertBefore(anchorKey, name)
       return
     }
@@ -167,6 +159,22 @@ class Plan {
     } else {
       this.eventChain.push(name)
     }
+  }
+
+  private findNodeTopLegalBefore = (nodeKey: string) => {
+    const eventKeys = this.eventChain.getNodeKeys()
+    const find = (findKey: string) => {
+      for (const key of eventKeys) {
+        const eventInfo = this.planInfoMap[key]
+        if (key === findKey) {
+          return key
+        }
+        if (eventInfo.before === findKey) {
+          return find(key)
+        }
+      }
+    }
+    return find(nodeKey)
   }
 
   public getPlanInfo = () => {
