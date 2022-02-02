@@ -200,6 +200,11 @@ class Plan {
     }
   }
 
+  public isPlanEvent = (eventName: string) => {
+    const node = this.eventChain.find(eventName)
+    return !!node
+  }
+
   public execPlan = () => {
     this.emitEvent()
     if (this.isAsync) {

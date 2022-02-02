@@ -135,18 +135,45 @@ plan.addToPlan({
 const plan = new Plan(context, false)
 ```
 
-### `addToPlan(info)`
+### 添加事件 `addToPlan(info)`
 
-- 添加事件
-- 可以重复添加相同事件
+- 添加需要执行的事件
+  - info 参数，事件的相关信息，结构如下
+    - name，必要，表示事件名
+    - handle，必要，表示事件函数，一个事件可以注册多个事件函数
+    - before 表示在某事件之前执行
+    - after 表示在某事件之后执行
+    - before 和 after 不能同时存在
+
+```ts
+interface Info {
+  name: string
+  handle: AnyFunction
+  weight?: number
+  before?: string
+  after?: string
+}
+```
+
+### `isPlanEvent(eventName)`
+
+- 判断事件是否在计划之中
 
 ### `getPlan()`
 
-- 获取当前事件执行的顺序
+- 获取当前事件执行的顺序，以数组的形式返回
 
 ### `execPlan()`
 
-- 执行事件
+- 执行事件计划
+
+### `execAsyncPlan()`
+
+- 执行异步事件计划，函数执行会返回一个 Promise 对象，用于判断事件是否完成
+
+```js
+await plan.execAsyncPlan()
+```
 
 # Test Report
 

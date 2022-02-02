@@ -59,6 +59,18 @@ describe('事件计划 Plan', () => {
     }).toThrow()
   })
 
+  test('isPlanEvent', async () => {
+    const plan = new Plan()
+    plan.addToPlan({
+      name: 'a',
+      handle: noop,
+      weight: 10,
+    })
+
+    expect(plan.isPlanEvent('a')).toBe(true)
+    expect(plan.isPlanEvent('b')).toBe(false)
+  })
+
   test('getPlanInfo', async () => {
     const plan = new Plan()
     plan.addToPlan({
