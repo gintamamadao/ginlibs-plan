@@ -129,7 +129,9 @@ plan.addToPlan({
 
 - 初始化时可以加入上下文，
   - context 参数，作为每个事件函数的上下文
-  - isAsync 参数，如果存在事件函数返回的是 Promise 对象并且需要该 Promise 转成完成状态后再向下执行事件，需要传入 true 作为 isAsync 参数，则所有异步事件都强制串行执行
+  - isAsync 参数，默认为 false, 如果是 true 表示当前事件计划是异步执行的
+    - 异步计划中的中所有的事件都将变成异步执行
+    - 异步计划中的事件仍然按照顺序串行执行，即如果当前事件返回一个 Promise，那必须等到 Promise 执行完成才允许执行下一个事件
 
 ```js
 const plan = new Plan(context, false)
@@ -155,6 +157,18 @@ interface Info {
 }
 ```
 
+- 例子
+
+```js
+plan.addToPlan({
+  name: 'a',
+  handle: () => {
+    // todo
+  },
+  weight: 1,
+})
+```
+
 ### `isPlanEvent(eventName)`
 
 - 判断事件是否在计划之中
@@ -169,7 +183,7 @@ interface Info {
 
 ### `execAsyncPlan()`
 
-- 执行异步事件计划，函数执行会返回一个 Promise 对象，用于判断事件是否完成
+- 执行异步事件计划，该函数执行会返回一个 Promise 对象，用于判断事件是否完成
 
 ```js
 await plan.execAsyncPlan()
