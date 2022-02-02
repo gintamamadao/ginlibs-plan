@@ -28,8 +28,7 @@ class Plan {
   public addToPlan = (info: EventPlanInfo) => {
     const { name, handle, weight = 0, before, after } = info
     if (before && after) {
-      console.error('before and after can not exist at the same')
-      return
+      throw new Error('before and after can not exist at the same')
     }
     this.planInfoMap[name] = { ...info, weight }
     if (this.isAsync) {
@@ -98,8 +97,7 @@ class Plan {
   private addByBefore = (before: string, name: string, weight = 0) => {
     const anchorNode = this.eventChain.find(before)
     if (!anchorNode) {
-      console.error('before event do not exist')
-      return
+      throw new Error('before event do not exist')
     }
     const beforeNodes = this.eventChain.findFuncNodes((nodeVal: string) => {
       const itEventInfo = this.planInfoMap[nodeVal]
@@ -123,8 +121,7 @@ class Plan {
   private addByAfter = (after: string, name: string, weight = 0) => {
     const anchorNode = this.eventChain.find(after)
     if (!anchorNode) {
-      console.error('after event do not exist')
-      return
+      throw new Error('after event do not exist')
     }
     const afterNodes = this.eventChain.findFuncNodes((nodeVal: string) => {
       const itEventInfo = this.planInfoMap[nodeVal]
