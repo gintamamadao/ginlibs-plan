@@ -210,6 +210,7 @@ class Plan {
     if (this.isAsync) {
       this.eventQueue.trigger()
     }
+    this.eventChain.getHead().next = null
   }
 
   public execAsyncPlan = async () => {
@@ -222,6 +223,7 @@ class Plan {
       .trigger()
 
     await alock.getLock()
+    this.eventChain.getHead().next = null
   }
 }
 
