@@ -32,13 +32,13 @@ class Plan {
     }
     this.planInfoMap[name] = { ...info, weight }
     if (this.isAsync) {
-      this.eventsEmitt.on(name, (...args: any[]) => {
+      this.eventsEmitt.once(name, (...args: any[]) => {
         this.eventQueue.add(() => {
           return isFunc(handle) && handle(...args)
         })
       })
     } else {
-      this.eventsEmitt.on(name, handle)
+      this.eventsEmitt.once(name, handle)
     }
     const eventNode = this.eventChain.find(name)
     if (eventNode) {
