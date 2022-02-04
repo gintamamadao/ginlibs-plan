@@ -78,7 +78,7 @@ plan.addToPlan({
 // a-1 是 a 的事件的依赖，需要在 a 之前执行，所以顺序是 b -> a-1 -> a
 ```
 
-### 事件按前置依赖关系 after 执行
+### 事件按后置依赖关系 after 执行
 
 ```js
 import Plan from 'ginlibs-plan'
