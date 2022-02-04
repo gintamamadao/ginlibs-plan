@@ -214,3 +214,7 @@ Time:        3.091 s
 ```
 
 ---
+
+# License
+
+MIT
