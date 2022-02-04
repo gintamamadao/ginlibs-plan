@@ -213,17 +213,17 @@ class Plan {
     this.eventChain.getHead().next = null
   }
 
-  public execAsyncPlan = async () => {
+  public execAsyncPlan = () => {
     this.emitEvent()
     const alock = new AsyncLock()
     this.eventQueue
       .add(() => {
+        this.eventChain.getHead().next = null
         alock.unLock()
       })
       .trigger()
 
-    await alock.getLock()
-    this.eventChain.getHead().next = null
+    return alock.getLock()
   }
 }
 
