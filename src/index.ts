@@ -190,6 +190,11 @@ class Plan {
     return this.eventChain.getNodeKeys()
   }
 
+  public isPlanEvent = (eventName: string) => {
+    const node = this.eventChain.find(eventName)
+    return !!node
+  }
+
   private emitEvent = () => {
     const chain = this.eventChain
     let eventNode = chain.getHead().next
@@ -198,11 +203,6 @@ class Plan {
       this.eventsEmitt.emit(eventName)
       eventNode = eventNode.next
     }
-  }
-
-  public isPlanEvent = (eventName: string) => {
-    const node = this.eventChain.find(eventName)
-    return !!node
   }
 
   public execPlan = () => {
