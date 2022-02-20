@@ -142,7 +142,9 @@ const plan = new Plan(context, false)
 - 添加需要执行的事件
   - info 参数，事件的相关信息，结构如下
     - name，必要，表示事件名
-    - handle，必要，表示事件函数，一个事件可以注册多个事件函数
+    - handle，必要，表示事件函数，一个事件可以注册多个事件函数，handle 会传入两个参数：
+      - prev 上一个事件的执行结果
+      - context 初始化时事件函数的上下文
     - before 表示在某事件之前执行
     - after 表示在某事件之后执行
     - before 和 after 不能同时存在
@@ -162,7 +164,7 @@ interface Info {
 ```js
 plan.addToPlan({
   name: 'a',
-  handle: () => {
+  handle: (prev, context) => {
     // todo
   },
   weight: 1,
@@ -189,6 +191,10 @@ plan.addToPlan({
 await plan.execAsyncPlan()
 ```
 
+### `getEventResult(eventName)`
+
+- 获取某个事件的执行结果
+
 # Test Report
 
 > Tests are using jest, to run the tests use:
@@ -201,10 +207,10 @@ report detail
 
 ```sh
 ----------|---------|----------|---------|---------|-------------------------------------
-File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s                   
+File      | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 ----------|---------|----------|---------|---------|-------------------------------------
-All files |     100 |       85 |     100 |     100 |                                     
- index.ts |     100 |       85 |     100 |     100 | 42,52,80-90,105,122,134,146,158,263 
+All files |     100 |       85 |     100 |     100 |
+ index.ts |     100 |       85 |     100 |     100 | 42,52,80-90,105,122,134,146,158,263
 ----------|---------|----------|---------|---------|-------------------------------------
 
 Test Suites: 6 passed, 6 total
