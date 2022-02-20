@@ -27,11 +27,28 @@ class Plan {
   }
 
   private addAsyncEvent = (info: EventPlanInfo) => {
-    const { name, handle, weight = 0, before, after } = info
-    this.eventsEmitt.once(name, (...args: any[]) => {
-      this.eventQueue.add((prevRes: any) => {
-        const handleArgs = isUndefined(prevRes) ? [prevRes, ...args] : args
-        return isFunc(handle) ? handle(...handleArgs) : undefined
+    const { name, handle } = info
+    this.eventsEmitt.once(name, (pervEventName, context) => {
+      this.eventQueue.add((prevEventRes: any) => {
+        if (this.eventResultMap[name]) {
+          this.eventResultMap[name].push(prevEventRes)
+        } else {
+          const curResults = this.eventResultMap[name] || []
+          this.eventResultMap[name] = curResults
+        }
+
+        if (pervEventName) {
+          const pervResults = this.eventResultMap[pervEventName] || []
+          pervResults.push(prevEventRes)
+          this.eventResultMap[pervEventName] = pervResults
+        }
+
+        const pervInfo = {
+          pervEventName,
+          prevEventRes: this.eventResultMap[pervEventName] ?? [undefined],
+        }
+
+        return isFunc(handle) ? handle(pervInfo, context) : undefined
       })
     })
   }
@@ -231,9 +248,11 @@ class Plan {
   public execAsyncPlan = () => {
     const chain = this.eventChain
     let eventNode = chain.getHead().next
+    let pervEventName: string | undefined = undefined
     while (eventNode) {
       const eventName = eventNode.key
-      this.eventsEmitt.emit(eventName)
+      this.eventsEmitt.emit(eventName, pervEventName)
+      pervEventName = eventName
       eventNode = eventNode.next
     }
     const alock = new AsyncLock()

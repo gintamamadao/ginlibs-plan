@@ -1,29 +1,36 @@
 import Plan from '../index'
 import { sleep } from 'ginlibs-utils'
+import { AsyncLock } from 'ginlibs-lock'
 
 describe('异步事件计划 Plan', () => {
   test('异步事件执行顺序', async () => {
     const plan = new Plan({}, true)
     let str = ''
+    const ala = new AsyncLock()
+    const alb = new AsyncLock()
+    const alc = new AsyncLock()
     plan.addToPlan({
       name: 'a',
       handle: async () => {
         await sleep(100)
         str = str + 'a'
+        ala.unLock()
       },
     })
     plan.addToPlan({
       name: 'b',
       handle: async () => {
-        await sleep(60)
+        await sleep(50)
         str = str + 'b'
+        alb.unLock()
       },
     })
     plan.addToPlan({
       name: 'c',
       handle: async () => {
-        await sleep(100)
+        await sleep(50)
         str = str + 'c'
+        alc.unLock()
       },
       weight: 10,
     })
@@ -42,16 +49,16 @@ describe('异步事件计划 Plan', () => {
     await sleep(0)
     expect(str).toBe('d')
 
-    await sleep(50)
+    await sleep(20)
     expect(str).toBe('d')
 
-    await sleep(60)
+    await alc.getLock()
     expect(str).toBe('dc')
 
-    await sleep(100)
+    await ala.getLock()
     expect(str).toBe('dca')
 
-    await sleep(60)
+    await alb.getLock()
     expect(str).toBe('dcab')
   })
 
