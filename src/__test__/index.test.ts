@@ -4,6 +4,32 @@ const noop = () => undefined
 
 describe('事件计划 Plan', () => {
   test('addToPlan', async () => {
+    const plan = new Plan({
+      info: {
+        cnt: 1,
+      },
+    })
+
+    plan.addToPlan({
+      name: 'a',
+      handle: (prev, context) => {
+        expect(prev.pervEventName).toBe(undefined)
+        expect(context.info.cnt).toBe(1)
+
+        context.info.cnt++
+      },
+    })
+    plan.addToPlan({
+      name: 'b',
+      handle: (prev, context) => {
+        expect(prev.pervEventName).toBe('a')
+        expect(context.info.cnt).toBe(2)
+      },
+    })
+
+    plan.execPlan()
+  })
+  test('addToPlan', async () => {
     const plan = new Plan()
     let str = ''
     plan.addToPlan({
