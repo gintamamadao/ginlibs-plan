@@ -1,6 +1,6 @@
 import { Chain } from 'ginlibs-chain'
 import { Events } from 'ginlibs-events'
-import { isFunc } from 'ginlibs-type-check'
+import { isFunc, isUndefined } from 'ginlibs-type-check'
 import { AsyncLock } from 'ginlibs-lock'
 import EventQueue from 'ginlibs-queue'
 
@@ -17,12 +17,23 @@ class Plan {
   private eventsEmitt: Events
   private eventQueue: EventQueue
   private planInfoMap: Record<string, EventPlanInfo> = {}
+  private eventResultMap: Record<string, any[]> = {}
 
   constructor(context: any = {}, isAsync = false) {
     this.eventChain = new Chain()
     this.eventsEmitt = new Events(context)
     this.eventQueue = new EventQueue()
     this.isAsync = isAsync
+  }
+
+  private addAsyncEvent = (info: EventPlanInfo) => {
+    const { name, handle, weight = 0, before, after } = info
+    this.eventsEmitt.once(name, (...args: any[]) => {
+      this.eventQueue.add((prevRes: any) => {
+        const handleArgs = isUndefined(prevRes) ? [prevRes, ...args] : args
+        return isFunc(handle) ? handle(...handleArgs) : undefined
+      })
+    })
   }
 
   public addToPlan = (info: EventPlanInfo) => {
@@ -32,11 +43,7 @@ class Plan {
     }
     this.planInfoMap[name] = { ...info, weight }
     if (this.isAsync) {
-      this.eventsEmitt.once(name, (...args: any[]) => {
-        this.eventQueue.add(() => {
-          return isFunc(handle) && handle(...args)
-        })
-      })
+      this.addAsyncEvent(info)
     } else {
       this.eventsEmitt.once(name, handle)
     }
@@ -195,7 +202,28 @@ class Plan {
     return !!node
   }
 
-  private emitEvent = () => {
+  public getEventResult = (event: string) => {
+    return this.eventResultMap[event]
+  }
+
+  public execPlan = () => {
+    if (this.isAsync) {
+      return this.execAsyncPlan()
+    }
+    const chain = this.eventChain
+    let eventNode = chain.getHead().next
+    let prevRes: any[] = []
+    while (eventNode) {
+      const eventName = eventNode.key
+      prevRes = this.eventsEmitt.emit(eventName, prevRes)
+      this.eventResultMap[eventName] = prevRes
+      eventNode = eventNode.next
+    }
+    this.eventChain.getHead().next = null
+    return this.eventResultMap
+  }
+
+  public execAsyncPlan = () => {
     const chain = this.eventChain
     let eventNode = chain.getHead().next
     while (eventNode) {
@@ -203,23 +231,11 @@ class Plan {
       this.eventsEmitt.emit(eventName)
       eventNode = eventNode.next
     }
-  }
-
-  public execPlan = () => {
-    this.emitEvent()
-    if (this.isAsync) {
-      this.eventQueue.trigger()
-    }
-    this.eventChain.getHead().next = null
-  }
-
-  public execAsyncPlan = () => {
-    this.emitEvent()
     const alock = new AsyncLock()
     this.eventQueue
-      .add(() => {
+      .add((prevRes: any) => {
         this.eventChain.getHead().next = null
-        alock.unLock()
+        alock.unLock(prevRes)
       })
       .trigger()
 
