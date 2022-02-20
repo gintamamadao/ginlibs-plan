@@ -30,6 +30,7 @@ class Plan {
     const { name, handle } = info
     this.eventsEmitt.once(name, (pervEventName, context) => {
       this.eventQueue.add((prevEventRes: any) => {
+        // 只做初始化，如果已经初始化完成那说明上一个事件重名就加入同名事件的结果
         if (this.eventResultMap[name]) {
           this.eventResultMap[name].push(prevEventRes)
         } else {
@@ -233,12 +234,13 @@ class Plan {
     let prevEventRes: any[] = []
     while (eventNode) {
       const eventName = eventNode.key
-      prevEventRes = this.eventsEmitt.emit(eventName, {
+      const curEventRes = this.eventsEmitt.emit(eventName, {
         pervEventName,
         prevEventRes,
       })
       pervEventName = eventName
-      this.eventResultMap[eventName] = prevEventRes
+      prevEventRes = curEventRes
+      this.eventResultMap[eventName] = curEventRes
       eventNode = eventNode.next
     }
     this.eventChain.getHead().next = null
@@ -258,6 +260,7 @@ class Plan {
     const alock = new AsyncLock()
     this.eventQueue
       .add((prevRes: any) => {
+        this.eventResultMap[pervEventName]?.push?.(prevRes)
         this.eventChain.getHead().next = null
         alock.unLock(prevRes)
       })
