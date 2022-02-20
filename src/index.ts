@@ -1,6 +1,6 @@
 import { Chain } from 'ginlibs-chain'
 import { Events } from 'ginlibs-events'
-import { isFunc, isUndefined } from 'ginlibs-type-check'
+import { isFunc } from 'ginlibs-type-check'
 import { AsyncLock } from 'ginlibs-lock'
 import EventQueue from 'ginlibs-queue'
 
