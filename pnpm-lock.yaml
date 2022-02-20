@@ -24,7 +24,7 @@ specifiers:
   ginlibs-chain: ^2.1.0
   ginlibs-events: ^2.1.0
   ginlibs-lock: ^1.0.0
-  ginlibs-queue: ^1.0.0
+  ginlibs-queue: ^1.1.0
   ginlibs-type-check: ^2.0.0
   ginlibs-utils: ^1.0.0
   glob: ^7.1.6
@@ -45,7 +45,7 @@ dependencies:
   ginlibs-chain: 2.1.0
   ginlibs-events: 2.1.0
   ginlibs-lock: 1.0.0
-  ginlibs-queue: 1.0.0
+  ginlibs-queue: 1.1.0
   ginlibs-type-check: 2.0.0
   ginlibs-utils: 1.0.0
 
@@ -3742,8 +3742,8 @@ packages:
       ginlibs-type-check: 2.0.0
     dev: false
 
-  /ginlibs-queue/1.0.0:
-    resolution: {integrity: sha512-mjx/FxWMHBaa1qMbomycYhItwCxmtNtJFzYryp5PlZhsActjVkRp5YNEiB3PadNOVyYH/CEjn5fAV4OEQbUt8w==}
+  /ginlibs-queue/1.1.0:
+    resolution: {integrity: sha512-b+Rha4uljoeUBYPqE1JeQlxha7MZGydW0B5G33REHFyvWvbMKaVwbqMcli+/29twBzLHZp19g6jfZ0DEaNAvlQ==}
     dependencies:
       ginlibs-lock: 1.0.0
       ginlibs-type-check: 2.0.0
