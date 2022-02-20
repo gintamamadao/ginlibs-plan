@@ -39,7 +39,7 @@ class Plan {
   public addToPlan = (info: EventPlanInfo) => {
     const { name, handle, weight = 0, before, after } = info
     if (before && after) {
-      throw new Error('before and after can not exist at the same')
+      throw new Error('before and after can not exist at the same time')
     }
     this.planInfoMap[name] = { ...info, weight }
     if (this.isAsync) {
@@ -212,11 +212,16 @@ class Plan {
     }
     const chain = this.eventChain
     let eventNode = chain.getHead().next
-    let prevRes: any[] = []
+    let pervEventName: string | undefined = undefined
+    let prevEventRes: any[] = []
     while (eventNode) {
       const eventName = eventNode.key
-      prevRes = this.eventsEmitt.emit(eventName, prevRes)
-      this.eventResultMap[eventName] = prevRes
+      prevEventRes = this.eventsEmitt.emit(eventName, {
+        pervEventName,
+        prevEventRes,
+      })
+      pervEventName = eventName
+      this.eventResultMap[eventName] = prevEventRes
       eventNode = eventNode.next
     }
     this.eventChain.getHead().next = null
